@@ -1,14 +1,10 @@
 package com.linqcan.mytime;
 
-import com.linqcan.mytime.OngoingTabFragment.ManageActivitiesListener;
-
 import android.app.Activity;
 import android.content.Context;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.widget.SimpleCursorAdapter;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,15 +14,20 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class ActivitiesTabFragment extends ListFragment{
+public class OngoingTabFragment extends ListFragment{
 	
 	private static void putLogMessage(String msg){
-		MainActivity.putLogMessage("ActivitiesTabFragment", msg);
+		MainActivity.putLogMessage("OngoingTabFragment", msg);
 	}
 	
 	private DatabaseProvider mDatabase;
 	private Context mContext;
 	private ManageActivitiesListener mListener;
+	
+	public interface ManageActivitiesListener{
+		public void startNewActivity();
+		public void viewActivity(long id);
+	}
 	
 	@Override
 	public void onAttach(Activity activity) {
@@ -41,19 +42,15 @@ public class ActivitiesTabFragment extends ListFragment{
 			throw new ClassCastException("Interface ManageActivitiesListener is not implemented by activity " + activity.toString());
 		}
 	}
-		
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		putLogMessage("onCreateView");
+		View v = inflater.inflate(R.layout.tab_ongoing, container, false);
 		setHasOptionsMenu(true);
-		setRetainInstance(true); //TODO evaluate the use of this one
-		return inflater.inflate(R.layout.tab_activities, container, false);
-	}
-	
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+		setRetainInstance(true); // TODO Evaluate the use of this one
+		return v;
 	}
 	
 	@Override
@@ -61,35 +58,21 @@ public class ActivitiesTabFragment extends ListFragment{
 		super.onActivityCreated(savedInstanceState);
 		putLogMessage("onActivityCreated");
     	getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-    	((TextView)getListView().getEmptyView()).setText(getString(R.string.empty_text_activities));
+    	//Hack since setEmptyText does not work.
+		((TextView)getListView().getEmptyView()).setText(getString(R.string.empty_text_ongoing));
 	}
 	
 	private void populateListView(){
 		putLogMessage("populateListView");
 		mDatabase.open();
-		SimpleCursorAdapter adapter = mDatabase.getAllActivitiesAdapter();
-		adapter.setViewBinder(new ActivityListViewBinder());
+		SimpleCursorAdapter adapter = mDatabase.getAllOngoingActivitiesAdapter();
 		setListAdapter(adapter);
 		mDatabase.close();
 	}
 	
 	@Override
-	public void onInflate(Activity activity, AttributeSet attrs,
-			Bundle savedInstanceState) {
-		super.onInflate(activity, attrs, savedInstanceState);
-		putLogMessage("onInflate");
-	}
-	
-	@Override
-	public void onPrepareOptionsMenu(Menu menu) {
-		super.onPrepareOptionsMenu(menu);
-		putLogMessage("onPrepareOptionsMenu");
-	}
-	
-	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		putLogMessage("onCreateOptionsMenu");
-		inflater.inflate(R.menu.tab_activities, menu);
+		inflater.inflate(R.menu.tab_recent, menu);
 	}
 	
 	@Override
@@ -97,9 +80,9 @@ public class ActivitiesTabFragment extends ListFragment{
 		switch(item.getItemId()){
 			case R.id.menu_addactivity:
 				mListener.startNewActivity();
+				return true;		
 		}
 		return super.onOptionsItemSelected(item);
-		
 	}
 	
 	@Override
@@ -109,40 +92,8 @@ public class ActivitiesTabFragment extends ListFragment{
 	}
 	
 	@Override
-	public void onPause() {
-		super.onPause();
-		putLogMessage("onPause");
-	}
-	
-	@Override
 	public void onResume() {
 		super.onResume();
-		putLogMessage("onResume");
 		populateListView();
 	}
-	
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-		putLogMessage("onDestroy");
-	}
-	
-	@Override
-	public void onDetach() {
-		super.onDetach();
-		putLogMessage("onDetach");
-	}
-	
-	@Override
-	public void onStart() {
-		super.onStart();
-		putLogMessage("onStart");
-	}
-	
-	@Override
-	public void onStop() {
-		super.onStop();
-		putLogMessage("onStop");
-	}
-	
 }

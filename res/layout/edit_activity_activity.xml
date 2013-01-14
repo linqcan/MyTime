@@ -4,14 +4,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
-	<ListView 
-	    android:id="@android:id/list"
-	    android:layout_height="match_parent" 
-	    android:layout_width="match_parent" />
-	<TextView 
-        android:id="@android:id/empty"
+    <fragment
+        android:id="@+id/edit_activity_fragment"
+        class="com.linqcan.mytime.EditActivityFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         />
     
 

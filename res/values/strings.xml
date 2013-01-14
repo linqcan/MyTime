@@ -2,15 +2,59 @@
 <resources>
 
     <string name="app_name">MyTime</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="menu_settings">Settings</string>
+    <string name="menu_addactivity">Start new activity</string>
+    <string name="menu_addlabel">Add label</string>
+    <string name="menu_cancel">Cancel</string>
+    <string name="menu_save">Save</string>
+    <string name="menu_delete">Delete</string>
+    <string name="menu_edit_label">Edit label</string>
+    <string name="menu_edit_activity">Edit activity</string>
     
-    <string name="tab_recent">Recent</string>
+    <string name="tab_recent">Ongoing</string>
     <string name="tab_labels">Labels</string>
     <string name="tab_activities">Activities</string>
     
-    <string name="recent_placeholder">Recent activities</string>
+    <string name="ongoing_placeholder">Ongoing activities</string>
     <string name="labels_placeholder">All labels</string>
     <string name="activities_placeholder">All activities</string>
+    
+    <string name="empty_text_labels">No labels created yet. Create a new by pressing \"Add Label\"</string>
+    <string name="empty_text_ongoing">No ongoing activities</string>
+    <string name="empty_text_activities">No activities created yet. Create one by pressing \"Start New Activity\"</string>
+    <string name="empty_text_view_label">No activities have been labelled with this label</string>
+
+    <string name="title_activity_new_label">Create new label</string>
+    <string name="hint_label_name">Label name</string>
+    
+    <string name="title_activity_view_label">View label</string>    
+    <string name="title_activity_edit_label">Edit label</string>    
+    <string name="title_activity_new_activity">New activity</string>
+    <string name="title_activity_edit_activity">Edit activity</string>
+    <string name="title_activity_view_activity">View activity</string>
+    
+    <string name="dialog_cancel">Cancel</string>
+    
+    <string name="delete_label_title">Delete label?</string>
+    <string name="delete_label_message">Deleting this label will remove the label from all labelled activities as well!</string>
+    <string name="delete_dialog_positive">Delete</string>
+    
+    <string name="btn_start_timer">Start</string>
+    
+    <string name="btn_stop_timer">Stop activity</string>
+    
+    <string name="label_activity_started_at">Started</string>    
+    <string name="label_activity_ended_at">Ended</string>    
+    <string name="label_activity_duration">Duration</string>    
+    <string name="label_label">Label</string>
+    <string name="label_label_info_duration">Total duration</string>
+    <string name="label_label_name">Name</string>
+    
+    <string name="label_activity_description">Description</string>
+    <string name="hint_no_description"><i>Edit the activity to add a description</i></string>
+    <string name="hint_description">What were you doing?</string>
+    
+    <string name="end_date_label">End date</string>
+    
+    
 
 </resources>

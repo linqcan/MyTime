@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <LinearLayout 
+        android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:orientation="vertical"
+    	android:padding="16dp"
+        >
+        <!-- End date -->
+        <LinearLayout 	        
+            android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical"
+            style="@style/ItemBox"
+            >
+	        <TextView
+	            android:text="@string/end_date_label"
+	            style="@style/ItemLabel"
+	         	/>
+	        <View 
+		        android:layout_width="match_parent"
+		        android:layout_height="1dp"
+		        style="@style/ItemBorder"
+		        />
+	        <LinearLayout
+	            android:layout_width="match_parent"
+	    		android:layout_height="wrap_content"
+	    		android:orientation="horizontal"
+	           >
+		       <Button 
+			        android:id="@+id/btn_end_date"
+					style="@style/DateButton"
+			        />
+			   <Button 
+			        android:id="@+id/btn_end_time"
+			        style="@style/DateButton"
+			        />
+		    </LinearLayout>
+	    </LinearLayout>
+    
+    	<!-- Label -->
+        <LinearLayout 	        
+            android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical"
+            style="@style/ItemBox"
+            >      
+	        <TextView
+	            android:text="@string/label_label"
+	            style="@style/ItemLabel"
+	            />
+	        <View 
+		        android:layout_width="match_parent"
+		        android:layout_height="1dp"
+		        style="@style/ItemBorder"
+		        />
+	        <Spinner 
+	            android:id="@+id/spinner_labels"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            />
+	    </LinearLayout>
+	    
+        <!-- Description -->
+        <LinearLayout 	        
+            android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical"
+            style="@style/ItemBox"
+            >
+	        <TextView
+	            android:text="@string/label_activity_description"
+	            style="@style/ItemLabel"
+	            />
+	        <View 
+		        android:layout_width="match_parent"
+		        android:layout_height="1dp"
+		        style="@style/ItemBorder"
+		        />
+	        <EditText
+	            android:id="@+id/txt_activity_desc"
+	            android:layout_width="match_parent"
+	            android:layout_height="match_parent"
+	            android:inputType="textMultiLine"
+	            android:minLines="3"
+	            android:gravity="top"
+	            android:hint="@string/hint_description"
+	            />  
+	    </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>
