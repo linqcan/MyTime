@@ -45,6 +45,14 @@ public class ViewActivityFragment extends Fragment implements OnItemSelectedList
 	private ViewActivityListener mListener;
 	private boolean mOngoing = false;
 	
+	/*
+	 * mFirstTime
+	 * 
+	 * To make sure onItemSelected is not triggered when activity is raised
+	 * for the first time
+	 */
+	private boolean mFirstTime = true; 
+	
 	//Views
 	private Spinner mLabelsSpinner;
 	private TextView mNoSpinnerTxt;
@@ -122,15 +130,13 @@ public class ViewActivityFragment extends Fragment implements OnItemSelectedList
 			putLogMessage("Mode VIEW");
 			if(mTaId != -1){
 				mCurrentTimeActivity = mDatabase.getActivityById(mTaId);
-				updateOngoing(false);
+				mOngoing = mCurrentTimeActivity.getOngoing();
 			}
 		}
 	
 		if(mCurrentTimeActivity.getOngoing() == true){
 			//The activity is ongoing and hence the mode should be VIEW
 			mStopBtn.setOnClickListener(stopBtnListener);
-			
-			//mLabelsSpinner.setEnabled(false);
 			
 			Cursor cursor = mDatabase.getAllLabelsCursor();
 		
@@ -144,8 +150,8 @@ public class ViewActivityFragment extends Fragment implements OnItemSelectedList
 						0);
 				adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
 				mLabelsSpinner.setAdapter(adapter);
-				mLabelsSpinner.setOnItemSelectedListener(this);
 				setSpinner();
+				mLabelsSpinner.setOnItemSelectedListener(this);				
 			}
 		}
 		else{
@@ -229,9 +235,13 @@ public class ViewActivityFragment extends Fragment implements OnItemSelectedList
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int pos,
 			long id) {
+		if(mFirstTime){
+			mFirstTime = false;
+			return;
+		}
 		putLogMessage("Label with id " + Long.toString(id) + " was selected");
 		mCurrentTimeActivity.setLabel_id(id);
-		Toast.makeText(mActivity, "Label updated", Toast.LENGTH_SHORT).show();
+		Toast.makeText(mActivity, "Label updated", Toast.LENGTH_SHORT).show();		
 	}
 
 	@Override
