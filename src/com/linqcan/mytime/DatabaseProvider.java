@@ -6,16 +6,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
-import android.widget.SimpleCursorAdapter;
 
 public class DatabaseProvider {
 	
 	private SQLiteDatabase mDatabase;
 	private DatabaseOpenHelper mDatabaseHelper;
-	private Context mContext;
 	
 	public DatabaseProvider(Context context){
-		mContext = context;
 		mDatabaseHelper = new DatabaseOpenHelper(context);
 	}
 	
@@ -67,18 +64,6 @@ public class DatabaseProvider {
 	public Cursor getAllLabelsCursor(){
 		Cursor cursor = mDatabase.rawQuery("SELECT * FROM "+ Label.TABLE_NAME+" ORDER BY name ASC", null);
 		return cursor;
-	}
-	
-	public SimpleCursorAdapter getAllLabelsAdapter(){
-		Cursor cursor = getAllLabelsCursor();
-		SimpleCursorAdapter adapter = new SimpleCursorAdapter(
-											mContext, 
-											R.layout.label_list_item, 
-											cursor, 
-											new String[] {"name"}, 
-											new int[] {R.id.text1}, 
-											0);
-		return adapter;
 	}
 	
 	public Label getLabelById(long id){
@@ -153,18 +138,11 @@ public class DatabaseProvider {
 				
 	}
 	
-	public SimpleCursorAdapter getAllActivitiesAdapter(){
+	public Cursor getAllActivitiesCursor(){
 		Cursor cursor = mDatabase.rawQuery("SELECT *,datetime("+TimeActivity.COLUMN_ACTIVITY_DATE+",'unixepoch','localtime') AS "+TimeActivity.COLUMN_ACTIVITY_DATE+"" +
 				" FROM "+TimeActivity.TABLE_NAME+" ORDER BY "+TimeActivity.COLUMN_ACTIVITY_DATE+" DESC", null);
 		
-		SimpleCursorAdapter adapter = new SimpleCursorAdapter(
-											mContext, 
-											R.layout.activity_list_item, 
-											cursor, 
-											new String[] {TimeActivity.COLUMN_ACTIVITY_DATE, TimeActivity.COLUMN_DESCRIPTION, TimeActivity.COLUMN_DURATION}, 
-											new int[] {R.id.text1, R.id.text2, R.id.text3}, 
-											0);
-		return adapter;
+		return cursor;
 	}
 	
 	public Cursor getAllActivitiesByLabelId(long id){
@@ -193,18 +171,11 @@ public class DatabaseProvider {
 		return cursor.getLong(cursor.getColumnIndexOrThrow("_id"));
 	}
 	
-	public SimpleCursorAdapter getAllOngoingActivitiesAdapter(){
+	public Cursor getAllOngoingActivitiesCursor(){
 		Cursor cursor = mDatabase.rawQuery("SELECT *,datetime("+TimeActivity.COLUMN_ACTIVITY_DATE+",'unixepoch','localtime') AS "+TimeActivity.COLUMN_ACTIVITY_DATE+"" +
 				" FROM "+TimeActivity.TABLE_NAME+" WHERE "+TimeActivity.COLUMN_ONGOING+"=1 ORDER BY "+TimeActivity.COLUMN_ACTIVITY_DATE+" ASC", null);
 		
-		SimpleCursorAdapter adapter = new SimpleCursorAdapter(
-											mContext, 
-											R.layout.label_list_item, 
-											cursor, 
-											new String[] {TimeActivity.COLUMN_ACTIVITY_DATE}, 
-											new int[] {R.id.text1}, 
-											0);
-		return adapter;		
+		return cursor;		
 	}
 	
 	public long getTotalDurationForLabel(long id){

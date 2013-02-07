@@ -2,6 +2,7 @@ package com.linqcan.mytime;
 
 import android.app.Activity;
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.SimpleCursorAdapter;
 import android.view.LayoutInflater;
@@ -61,7 +62,14 @@ public class LabelsTabFragment extends android.support.v4.app.ListFragment{
 	private void populateListView(){
 		putLogMessage("populateListView");
 		mDatabase.open();
-		SimpleCursorAdapter adapter = mDatabase.getAllLabelsAdapter();
+		Cursor cursor = mDatabase.getAllLabelsCursor();
+		SimpleCursorAdapter adapter = new SimpleCursorAdapter(
+				mContext, 
+				R.layout.label_list_item, 
+				cursor, 
+				new String[] {"name"}, 
+				new int[] {R.id.text1}, 
+				0);
 		setListAdapter(adapter);
 		mDatabase.close();
 	}

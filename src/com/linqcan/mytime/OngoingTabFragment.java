@@ -2,6 +2,7 @@ package com.linqcan.mytime;
 
 import android.app.Activity;
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.widget.SimpleCursorAdapter;
@@ -65,7 +66,14 @@ public class OngoingTabFragment extends ListFragment{
 	private void populateListView(){
 		putLogMessage("populateListView");
 		mDatabase.open();
-		SimpleCursorAdapter adapter = mDatabase.getAllOngoingActivitiesAdapter();
+		Cursor cursor = mDatabase.getAllOngoingActivitiesCursor();
+		SimpleCursorAdapter adapter = new SimpleCursorAdapter(
+				mContext, 
+				R.layout.label_list_item, 
+				cursor, 
+				new String[] {TimeActivity.COLUMN_ACTIVITY_DATE}, 
+				new int[] {R.id.text1}, 
+				0);
 		setListAdapter(adapter);
 		mDatabase.close();
 	}

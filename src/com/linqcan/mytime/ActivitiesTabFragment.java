@@ -67,7 +67,14 @@ public class ActivitiesTabFragment extends ListFragment{
 	private void populateListView(){
 		putLogMessage("populateListView");
 		mDatabase.open();
-		SimpleCursorAdapter adapter = mDatabase.getAllActivitiesAdapter();
+		Cursor cursor = mDatabase.getAllActivitiesCursor();
+		SimpleCursorAdapter adapter = new SimpleCursorAdapter(
+				mContext, 
+				R.layout.activity_list_item, 
+				cursor, 
+				new String[] {TimeActivity.COLUMN_ACTIVITY_DATE, TimeActivity.COLUMN_DESCRIPTION, TimeActivity.COLUMN_DURATION}, 
+				new int[] {R.id.text1, R.id.text2, R.id.text3}, 
+				0);
 		adapter.setViewBinder(new ActivityListViewBinder());
 		setListAdapter(adapter);
 		mDatabase.close();
