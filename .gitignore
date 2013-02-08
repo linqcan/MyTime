@@ -18,7 +18,3 @@ libs/
 
 # Local configuration file (sdk path, etc)
 local.properties
-.classpath
-.project
-proguard-project.txt
-project.properties
