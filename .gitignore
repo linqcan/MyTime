@@ -20,5 +20,5 @@ libs/
 local.properties
 .project
 .classpath
-project-properties
+project.properties
 proguard*
