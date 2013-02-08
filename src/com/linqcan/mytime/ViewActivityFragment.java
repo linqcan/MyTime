@@ -235,13 +235,11 @@ public class ViewActivityFragment extends Fragment implements OnItemSelectedList
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int pos,
 			long id) {
-		if(mFirstTime){
-			mFirstTime = false;
-			return;
+		if(mCurrentTimeActivity.getLabel_id() != id){
+			putLogMessage("Label with id " + Long.toString(id) + " was selected");
+			mCurrentTimeActivity.setLabel_id(id);
+			Toast.makeText(mActivity, "Label updated", Toast.LENGTH_SHORT).show();
 		}
-		putLogMessage("Label with id " + Long.toString(id) + " was selected");
-		mCurrentTimeActivity.setLabel_id(id);
-		Toast.makeText(mActivity, "Label updated", Toast.LENGTH_SHORT).show();		
 	}
 
 	@Override

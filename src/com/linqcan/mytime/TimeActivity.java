@@ -13,7 +13,7 @@ public class TimeActivity implements Serializable{
 	private Date end_date; //Date the activity ended
 	private long duration = 0;
 	private String description;
-	private long label_id;
+	private long label_id = 1;
 	private boolean ongoing;
 	
 	public final static String TABLE_NAME = "activities";
