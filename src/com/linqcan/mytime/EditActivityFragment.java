@@ -56,7 +56,7 @@ public class EditActivityFragment extends Fragment implements OnItemSelectedList
 		super.onAttach(activity);
 		putLogMessage("onAttach");
 		mActivity = activity;
-		mDatabase = new DatabaseProvider(activity);
+		mDatabase = DatabaseProvider.getInstance(activity.getApplicationContext());
 		mDatabase.open();
 		try{
 			mListener = (EditActivityListener) activity;

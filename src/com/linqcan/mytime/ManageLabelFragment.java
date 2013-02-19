@@ -44,7 +44,7 @@ public class ManageLabelFragment extends Fragment {
 		catch(ClassCastException e){
 			putLogMessage("Activity "+ activity.toString() +" does not implement ManageLabelListener");
 		}
-		mDatabase = new DatabaseProvider(activity);
+		mDatabase = DatabaseProvider.getInstance(activity.getApplicationContext());
 		mDatabase.open();
 	}
 	

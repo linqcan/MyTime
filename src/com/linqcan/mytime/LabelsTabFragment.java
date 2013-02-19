@@ -33,7 +33,7 @@ public class LabelsTabFragment extends android.support.v4.app.ListFragment{
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
 		mContext = activity;
-		mDatabase = new DatabaseProvider(mContext);
+		mDatabase = DatabaseProvider.getInstance(activity.getApplicationContext());
 		try{
 			mListener = (ManageLabelsListener) activity;
 		}

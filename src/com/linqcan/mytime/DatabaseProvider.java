@@ -11,9 +11,17 @@ public class DatabaseProvider {
 	
 	private SQLiteDatabase mDatabase;
 	private DatabaseOpenHelper mDatabaseHelper;
+	private static DatabaseProvider mInstance = null;
 	
-	public DatabaseProvider(Context context){
+	private DatabaseProvider(Context context){
 		mDatabaseHelper = new DatabaseOpenHelper(context);
+	}
+	
+	public static DatabaseProvider getInstance(Context context){
+		if(mInstance == null){
+			mInstance = new DatabaseProvider(context.getApplicationContext());
+		}
+		return mInstance;
 	}
 	
 	public void open(){

@@ -53,7 +53,7 @@ public class ViewLabelFragment extends ListFragment implements DeleteLabelDialog
 			putLogMessage("Activity "+ activity.toString() +" does not implement ViewLabelListener");
 		}
 		mActivity = activity;
-		mDatabase = new DatabaseProvider(activity);
+		mDatabase = DatabaseProvider.getInstance(activity.getApplicationContext());
 		mDatabase.open();		
 	}
 	

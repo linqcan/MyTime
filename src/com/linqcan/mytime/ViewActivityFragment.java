@@ -74,7 +74,7 @@ public class ViewActivityFragment extends Fragment implements OnItemSelectedList
 		catch(ClassCastException e){
 			throw new ClassCastException("ViewActivityListener not implemented by activity " + e.getMessage());
 		}
-		mDatabase = new DatabaseProvider(mActivity);
+		mDatabase = DatabaseProvider.getInstance(activity.getApplicationContext());
 		mDatabase.open();
 	}
 	

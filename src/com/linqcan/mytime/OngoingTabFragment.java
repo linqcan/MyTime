@@ -35,7 +35,7 @@ public class OngoingTabFragment extends ListFragment{
 		super.onAttach(activity);
 		putLogMessage("onAttach");
 		mContext = activity;
-		mDatabase = new DatabaseProvider(mContext);
+		mDatabase = DatabaseProvider.getInstance(activity.getApplicationContext());
 		try{
 			mListener = (ManageActivitiesListener) activity;
 		}
