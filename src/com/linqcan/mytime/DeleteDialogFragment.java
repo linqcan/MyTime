@@ -9,19 +9,24 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 
-public class DeleteLabelDialog extends DialogFragment {
+public class DeleteDialogFragment extends DialogFragment {
 	
 	private static void putLogMessage(String msg){
 		MainActivity.putLogMessage("DeleteLabelDialog", msg);
 	}
 	
-	public interface DeleteLabelDialogListener{
+	public interface DeleteDialogListener{
 		public void onDeleteConfirmed();
 		public void onCancelDialog();
 	}
 	
-	private DeleteLabelDialogListener mListener;
-	private String mFragTag;
+	public static enum DialogType{
+		LABEL, ACTIVITY
+	}
+	
+	private DeleteDialogListener mListener;
+	private String mCallerTag;
+	private DialogType mDialogType;
 	
 
 	@Override
@@ -29,7 +34,7 @@ public class DeleteLabelDialog extends DialogFragment {
 		super.onCreate(savedInstanceState);
 		putLogMessage("onCreate called");
 		try{
-			mListener = (DeleteLabelDialogListener) getFragmentManager().findFragmentByTag(mFragTag);
+			mListener = (DeleteDialogListener) getFragmentManager().findFragmentByTag(mCallerTag);
 		}
 		catch(ClassCastException e){
 			throw new ClassCastException("Fragment does not implement the DeleleLabelDialogListener");
@@ -39,8 +44,9 @@ public class DeleteLabelDialog extends DialogFragment {
 		}
 	}
 	
-	public void show(FragmentManager manager, String tag, String fragtag) {
-		mFragTag = fragtag;
+	public void show(FragmentManager manager, String tag, String callertag, DialogType type) {
+		mDialogType = type;
+		mCallerTag = callertag;
 		show(manager, tag);
 	}
 	
@@ -48,8 +54,16 @@ public class DeleteLabelDialog extends DialogFragment {
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		
-		builder.setTitle(R.string.delete_label_title);
-		builder.setMessage(R.string.delete_label_message);
+		switch(mDialogType){
+			case LABEL:
+				builder.setTitle(R.string.delete_label_title);
+				builder.setMessage(R.string.delete_label_message);
+				break;
+			case ACTIVITY:
+				builder.setTitle(R.string.delete_activity_title);
+				builder.setMessage(R.string.delete_activity_message);
+				break;
+		}
 		
 		builder.setPositiveButton(R.string.delete_dialog_positive, new DialogInterface.OnClickListener() {
 			@Override

@@ -2,6 +2,9 @@ package com.linqcan.mytime;
 
 import java.util.Date;
 
+import com.linqcan.mytime.DeleteDialogFragment.DeleteDialogListener;
+import com.linqcan.mytime.DeleteDialogFragment.DialogType;
+
 import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -21,7 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 
-public class ViewActivityFragment extends Fragment implements OnItemSelectedListener{
+public class ViewActivityFragment extends Fragment implements OnItemSelectedListener,DeleteDialogListener{
 	
 	private void putLogMessage(String msg){
 		MainActivity.putLogMessage("NewActivityFragment", msg);
@@ -157,7 +160,7 @@ public class ViewActivityFragment extends Fragment implements OnItemSelectedList
 		else{
 			mStopBtn.setVisibility(View.GONE);
 			mLabelsSpinner.setVisibility(View.GONE);
-			
+
 			Label label = mDatabase.getLabelById(mCurrentTimeActivity.getLabel_id());
 			mNoSpinnerTxt.setText(label.getName());
 			mNoSpinnerTxt.setVisibility(View.VISIBLE);
@@ -182,7 +185,10 @@ public class ViewActivityFragment extends Fragment implements OnItemSelectedList
 	public void onPause() {
 		putLogMessage("onPause");
 		super.onPause();
-		updateDatabase();
+		if(mMode == MODE.NEW){
+			//Fragment only exposes editable fields in "NEW" mode
+			updateDatabase();
+		}
 		mDatabase.close();
 	}
 	
@@ -264,11 +270,8 @@ public class ViewActivityFragment extends Fragment implements OnItemSelectedList
 				mListener.editActivity(mTaId);
 				return true;
 			case R.id.menu_delete:
-				boolean result = mDatabase.deleteActivity(mTaId);
-				if(!result){
-					Toast.makeText(mActivity, "Database error: Activity could not be deleted", Toast.LENGTH_LONG).show();
-				}
-				mListener.onDelete();
+				DeleteDialogFragment dialog = new DeleteDialogFragment();
+				dialog.show(getFragmentManager(), "dialog", getTag(), DialogType.ACTIVITY);
 				return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -294,4 +297,21 @@ public class ViewActivityFragment extends Fragment implements OnItemSelectedList
 			mListener.onFinsihedActivity(mCurrentTimeActivity.getId());
 		}
 	};
+
+	@Override
+	public void onDeleteConfirmed() {
+		boolean result = mDatabase.deleteActivity(mTaId);
+		if(result){
+			Toast.makeText(mActivity, getString(R.string.delete_activity_done_message), Toast.LENGTH_SHORT).show();
+			mListener.onDelete();
+		}
+		else{
+			Toast.makeText(mActivity, "Database error: Activity could not be deleted", Toast.LENGTH_LONG).show();
+		}
+	}
+
+	@Override
+	public void onCancelDialog() {
+		//Do nothing
+	}
 }

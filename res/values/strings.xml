@@ -33,11 +33,16 @@
     <string name="title_activity_view_activity">View activity</string>
     
     <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_ok">OK</string>
     
     <string name="delete_label_title">Delete label?</string>
     <string name="delete_label_message">Deleting this label will remove the label from all labelled activities as well!</string>
+    <string name="delete_label_done_message">Label deleted</string>
+    <string name="delete_activity_title">Delete activity?</string>
+    <string name="delete_activity_message">This activity cannot be restored after deletion.</string>
+    <string name="delete_activity_done_message">Activity deleted</string>
     <string name="delete_dialog_positive">Delete</string>
-    
+        
     <string name="btn_start_timer">Start</string>
     
     <string name="btn_stop_timer">Stop activity</string>

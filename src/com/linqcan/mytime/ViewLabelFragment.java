@@ -2,7 +2,8 @@ package com.linqcan.mytime;
 
 import java.io.ObjectOutputStream.PutField;
 
-import com.linqcan.mytime.DeleteLabelDialog.DeleteLabelDialogListener;
+import com.linqcan.mytime.DeleteDialogFragment.DeleteDialogListener;
+import com.linqcan.mytime.DeleteDialogFragment.DialogType;
 
 import android.app.Activity;
 import android.database.Cursor;
@@ -20,7 +21,7 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 import android.widget.TextView;
 
-public class ViewLabelFragment extends ListFragment implements DeleteLabelDialogListener {
+public class ViewLabelFragment extends ListFragment implements DeleteDialogListener {
 	
 	private void putLogMessage(String msg){
 		MainActivity.putLogMessage("ViewLabelFragment", msg);
@@ -140,8 +141,8 @@ public class ViewLabelFragment extends ListFragment implements DeleteLabelDialog
 				mListener.editLabel(mLabelItem.getId());
 				return true;
 			case R.id.menu_delete:
-				DeleteLabelDialog dialog = new DeleteLabelDialog();
-				dialog.show(getFragmentManager(), null, getTag());
+				DeleteDialogFragment dialog = new DeleteDialogFragment();
+				dialog.show(getFragmentManager(), "dialog", getTag(), DialogType.LABEL);
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
@@ -150,14 +151,10 @@ public class ViewLabelFragment extends ListFragment implements DeleteLabelDialog
 	
 	@Override
 	public void onDeleteConfirmed() {
-		boolean result = false;
-		//Not only should we delete the label
-		//we also have to remove all relations to activities
-		int rows = mDatabase.removeLabelFromActivities(mLabelItem.getId());
-		putLogMessage("Label cleared from "+Integer.toString(rows)+" activities");
-		//Remove the label
-		result = mDatabase.deleteLabel(mLabelItem.getId());
+		//Remove the label and all relations to it
+		boolean result = mDatabase.deleteLabel(mLabelItem.getId());
 		if(result){
+			Toast.makeText(mActivity, getString(R.string.delete_label_done_message), Toast.LENGTH_SHORT).show();
 			mListener.onDelete();
 		}
 		else{

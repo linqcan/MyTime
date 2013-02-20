@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class DatabaseProvider {
 	
@@ -60,8 +61,19 @@ public class DatabaseProvider {
 	}
 	
 	public boolean deleteLabel(Long id){
+		removeLabelFromActivities(id); //Verify this?
 		int result = mDatabase.delete(Label.TABLE_NAME, "_id = ?", new String[] {Long.toString(id)});
 		return result > 0;
+	}
+	
+	public int removeLabelFromActivities(long id){
+		if(id < 0){
+			return -1;
+		}
+		ContentValues values = new ContentValues();
+		values.put(TimeActivity.COLUMN_LABEL, getDefaultLabelId());
+		int rows = mDatabase.update(TimeActivity.TABLE_NAME, values, TimeActivity.COLUMN_LABEL+"=?", new String[] {Long.toString(id)});
+		return rows;
 	}
 	
 	private Label cursorToLabel(Cursor cursor){
@@ -160,17 +172,6 @@ public class DatabaseProvider {
 		Cursor cursor = mDatabase.rawQuery("SELECT *,datetime("+TimeActivity.COLUMN_ACTIVITY_DATE+",'unixepoch','localtime') AS "+TimeActivity.COLUMN_ACTIVITY_DATE+"" +
 				" FROM "+TimeActivity.TABLE_NAME+" WHERE "+TimeActivity.COLUMN_LABEL+"=? ORDER BY "+TimeActivity.COLUMN_ACTIVITY_DATE+" DESC", new String[] {Long.toString(id)});
 		return cursor;
-	}
-	
-	public int removeLabelFromActivities(long id){
-		if(id < 0){
-			return -1;
-		}
-		ContentValues values = new ContentValues();
-		values.put(TimeActivity.COLUMN_LABEL, getDefaultLabelId());
-		int rows = mDatabase.update(TimeActivity.TABLE_NAME, values, TimeActivity.COLUMN_LABEL+"=?", new String[] {Long.toString(id)});
-		
-		return rows;
 	}
 	
 	public long getDefaultLabelId(){
