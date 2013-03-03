@@ -11,6 +11,7 @@
         android:orientation="vertical"
         style="@style/ItemBox"
         >
+		<!-- Total Duration -->
 	    <TextView	        
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
@@ -29,7 +30,13 @@
 	        style="@style/ItemData"
 	        />
     </LinearLayout>
-    
+	<!-- Separator -->
+    <View 
+	    android:layout_width="match_parent"
+	    android:layout_height="2dp"
+	    style="@style/Separator"
+    />
+	<!-- List of time activities -->
 	<ListView 
 	    android:layout_width="match_parent"
 	    android:layout_height="match_parent"

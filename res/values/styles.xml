@@ -31,6 +31,10 @@
 		<item name="android:background">#0099CC</item>
     </style>
     
+    <style name="Separator">
+		<item name="android:background">#c5c5c5</item>
+    </style>
+    
     <style name="ItemBox">
         <item name="android:padding">0dp</item>
     </style>
