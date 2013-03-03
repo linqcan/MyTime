@@ -80,7 +80,7 @@ public class OngoingTabFragment extends ListFragment{
 	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.tab_recent, menu);
+		inflater.inflate(R.menu.tab_ongoing, menu);
 	}
 	
 	@Override

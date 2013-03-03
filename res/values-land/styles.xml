@@ -1,0 +1,10 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <style name="AppTheme" parent="@android:style/Theme.Holo.Light.DarkActionBar">
+		<item name="android:actionBarTabTextStyle">@style/ActionBarTabText</item>
+    </style>
+    
+    <style name="ActionBarTabText" parent="@android:style/Widget.Holo.Light.ActionBar.TabText.Inverse">
+    </style>
+
+</resources>
